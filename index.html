@@ -109,13 +109,15 @@
       transition:
         opacity 0.9s ease,
         transform 0.9s ease,
-        border-color 0.7s ease;
+        border-color 0.7s ease,
+        box-shadow 0.7s ease;
     }
 
     .section.is-visible .card {
       opacity: 1;
       transform: translateY(0) scale(1);
       border-color: rgba(242, 214, 179, 0.22);
+      box-shadow: 0 24px 56px rgba(0, 0, 0, 0.24);
     }
 
     .eyebrow {
@@ -197,6 +199,7 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.04);
+      transition: transform 0.7s ease, background-color 0.7s ease, border-color 0.7s ease;
     }
 
     .event-title {
@@ -229,6 +232,14 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 18px;
       background: rgba(255, 255, 255, 0.04);
+      transition: transform 0.7s ease, background-color 0.7s ease, border-color 0.7s ease;
+    }
+
+    .section.is-visible .event-card,
+    .section.is-visible .venue-item {
+      transform: translateY(0);
+      border-color: rgba(242, 214, 179, 0.18);
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .venue-title {
@@ -479,6 +490,18 @@
       }
     }
 
+    @keyframes mobileFloat {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-6px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 420px) {
       .card {
         width: min(100%, 23rem);
@@ -523,6 +546,26 @@
       .closing {
         --bg-position: center, center, center, center;
         --bg-size: auto, auto, auto, contain;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .card {
+        transform: translateY(26px) scale(0.97);
+      }
+
+      .event-card,
+      .venue-item {
+        transform: translateY(14px);
+      }
+
+      .section.is-visible .card {
+        animation: mobileFloat 3.6s ease-in-out infinite;
+      }
+
+      .section.is-visible .event-card:nth-child(2),
+      .section.is-visible .venue-item:nth-child(2) {
+        transition-delay: 0.12s;
       }
     }
 
@@ -616,13 +659,20 @@
 
       .section::before,
       .card,
-      .scroll-hint {
+      .scroll-hint,
+      .event-card,
+      .venue-item {
         animation: none;
         transition: none;
       }
 
       .card {
         opacity: 1;
+        transform: none;
+      }
+
+      .event-card,
+      .venue-item {
         transform: none;
       }
     }
@@ -708,7 +758,8 @@
         entry.target.classList.toggle('is-visible', entry.isIntersecting);
       });
     }, {
-      threshold: 0.45
+      threshold: 0.2,
+      rootMargin: '0px 0px -8% 0px'
     });
 
     sections.forEach((section) => observer.observe(section));
