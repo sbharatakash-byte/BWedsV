@@ -10,12 +10,12 @@
 
     :root {
       --bg: #090909;
-      --panel: rgba(14, 14, 14, 0.56);
+      --panel: linear-gradient(180deg, rgba(18, 18, 18, 0.52), rgba(10, 10, 10, 0.64));
       --text: #f6efe7;
       --muted: #d8c8b5;
       --accent: #f2d6b3;
       --line: rgba(255, 255, 255, 0.12);
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      --shadow: 0 22px 64px rgba(0, 0, 0, 0.34);
       --gopuram-hero: url("https://commons.wikimedia.org/wiki/Special:FilePath/Murugan%20Temple%20Gopuram.jpg");
       --jasmine-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Bunch%20of%20jasmine%20flowers.jpg");
       --diya-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Diya%20oil%20lamp.jpg");
@@ -65,6 +65,11 @@
       isolation: isolate;
     }
 
+    .section > * {
+      position: relative;
+      z-index: 1;
+    }
+
     .section::before {
       content: "";
       position: absolute;
@@ -73,7 +78,7 @@
       background-position: var(--bg-position, center);
       background-size: var(--bg-size, cover);
       background-repeat: no-repeat;
-      filter: saturate(0.95) contrast(1.05);
+      filter: saturate(0.98) contrast(1.04) brightness(0.98);
       transform: scale(1.08);
       animation: slowZoom 18s ease-in-out infinite alternate;
       z-index: -2;
@@ -84,18 +89,19 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.55)),
-        radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.38) 100%);
+        linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.52)),
+        radial-gradient(circle at center, transparent 18%, rgba(0, 0, 0, 0.34) 100%);
       z-index: -1;
     }
 
     .card {
-      width: min(100%, 460px);
-      padding: 18px 16px;
+      width: min(100%, 28rem);
+      padding: clamp(1rem, 2.4vw, 1.25rem);
       margin-inline: auto;
       border: 1px solid var(--line);
       background: var(--panel);
-      backdrop-filter: blur(6px);
+      backdrop-filter: blur(8px);
+      border-radius: 22px;
       box-shadow: var(--shadow);
       text-align: center;
       opacity: 0;
@@ -109,13 +115,13 @@
     .section.is-visible .card {
       opacity: 1;
       transform: translateY(0) scale(1);
-      border-color: rgba(242, 214, 179, 0.25);
+      border-color: rgba(242, 214, 179, 0.3);
     }
 
     .eyebrow {
       margin: 0 0 8px;
-      font-size: 0.64rem;
-      letter-spacing: 0.22rem;
+      font-size: clamp(0.6rem, 1.6vw, 0.72rem);
+      letter-spacing: 0.2rem;
       text-transform: uppercase;
       color: var(--muted);
     }
@@ -156,24 +162,26 @@
 
     .title {
       margin: 0;
-      font-size: clamp(1.45rem, 6vw, 2.45rem);
+      font-size: clamp(1.4rem, 5.2vw, 2.35rem);
       font-weight: 600;
       letter-spacing: 0.02rem;
-      line-height: 1.12;
+      line-height: 1.08;
+      text-wrap: balance;
     }
 
     .subtitle,
     .body {
       margin: 8px auto 0;
-      max-width: 18rem;
-      font-size: clamp(0.84rem, 3vw, 1rem);
-      line-height: 1.34;
+      max-width: 19rem;
+      font-size: clamp(0.84rem, 2.6vw, 1rem);
+      line-height: 1.38;
+      text-wrap: balance;
       color: var(--muted);
     }
 
     .meta {
       margin-top: 10px;
-      font-size: clamp(0.96rem, 3.4vw, 1.18rem);
+      font-size: clamp(0.94rem, 3vw, 1.14rem);
       line-height: 1.28;
       color: var(--accent);
     }
@@ -187,6 +195,7 @@
       font-size: 0.72rem;
       letter-spacing: 0.08rem;
       text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.04);
       transition:
         transform 0.25s ease,
         background-color 0.25s ease,
@@ -224,31 +233,31 @@
 
     @media (min-width: 768px) {
       .card {
-        width: min(100%, 520px);
-        padding: 20px 18px;
+        width: min(100%, 31rem);
+        padding: 1.2rem 1.1rem;
       }
 
       .title {
-        font-size: clamp(1.7rem, 4vw, 2.8rem);
+        font-size: clamp(1.7rem, 3.2vw, 2.55rem);
       }
 
       .subtitle,
       .body {
         max-width: 20rem;
-        font-size: clamp(0.92rem, 1.9vw, 1.05rem);
+        font-size: clamp(0.9rem, 1.45vw, 1.02rem);
       }
 
       .meta {
-        font-size: clamp(1rem, 2.2vw, 1.24rem);
+        font-size: clamp(0.98rem, 1.6vw, 1.18rem);
       }
 
       .intro .card {
-        max-width: 540px;
+        max-width: 33rem;
         transform: translateY(30px) scale(0.98);
       }
 
       .intro .script {
-        font-size: clamp(1.9rem, 5vw, 3.2rem);
+        font-size: clamp(1.9rem, 3.8vw, 3rem);
       }
     }
 
@@ -279,8 +288,8 @@
         radial-gradient(circle at 50% 18%, rgba(245, 205, 157, 0.24), transparent 22%),
         linear-gradient(90deg, rgba(0, 0, 0, 0.5), transparent 36%, transparent 64%, rgba(0, 0, 0, 0.46)),
         var(--gopuram-hero);
-      --bg-position: center, center 20%, center, center 8%;
-      --bg-size: auto, auto, auto, 112% auto;
+      --bg-position: center, center 18%, center, center 10%;
+      --bg-size: auto, auto, auto, cover;
     }
 
     .message {
@@ -289,8 +298,8 @@
         radial-gradient(circle at 50% 30%, rgba(255, 244, 222, 0.12), transparent 28%),
         linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.46)),
         var(--jasmine-photo);
-      --bg-position: center, center, center, 60% center;
-      --bg-size: auto, auto, auto, 130% auto;
+      --bg-position: center, center, center, 56% center;
+      --bg-size: auto, auto, auto, cover;
     }
 
     .date {
@@ -299,8 +308,8 @@
         radial-gradient(circle at 50% 42%, rgba(255, 208, 153, 0.22), transparent 24%),
         linear-gradient(0deg, rgba(70, 42, 20, 0.34), rgba(0, 0, 0, 0.1)),
         var(--diya-photo);
-      --bg-position: center, center, center, 50% 24%;
-      --bg-size: auto, auto, auto, 126% auto;
+      --bg-position: center, center, center, 50% 22%;
+      --bg-size: auto, auto, auto, cover;
     }
 
     .venue {
@@ -309,8 +318,8 @@
         linear-gradient(90deg, rgba(0, 0, 0, 0.62), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.58)),
         radial-gradient(circle at 50% 24%, rgba(233, 183, 129, 0.18), transparent 26%),
         var(--corridor-photo);
-      --bg-position: center, center, center, center 30%;
-      --bg-size: auto, auto, auto, 126% auto;
+      --bg-position: center, center, center, center 28%;
+      --bg-size: auto, auto, auto, cover;
     }
 
     .closing {
@@ -319,8 +328,8 @@
         radial-gradient(circle at 50% 26%, rgba(255, 221, 184, 0.18), transparent 26%),
         linear-gradient(180deg, transparent 10%, rgba(0, 0, 0, 0.32) 48%, rgba(0, 0, 0, 0.76) 100%),
         var(--closing-temple);
-      --bg-position: center, center, center, 50% 18%;
-      --bg-size: auto, auto, auto, 130% auto;
+      --bg-position: center, center, center, 50% 20%;
+      --bg-size: auto, auto, auto, cover;
     }
 
     .intro .card,
@@ -329,9 +338,9 @@
     }
 
     .intro .card {
-      max-width: 500px;
-      padding-top: 22px;
-      padding-bottom: 22px;
+      max-width: 29rem;
+      padding-top: 1.2rem;
+      padding-bottom: 1.2rem;
       transform: translateY(34px) scale(0.98);
       background:
         linear-gradient(180deg, rgba(14, 10, 8, 0.42), rgba(14, 10, 8, 0.58));
@@ -348,7 +357,7 @@
     }
 
     .intro .subtitle {
-      max-width: 16rem;
+      max-width: 15rem;
       margin-top: 8px;
       font-size: clamp(0.8rem, 2.8vw, 0.94rem);
       letter-spacing: 0.02rem;
@@ -364,6 +373,22 @@
       background: rgba(28, 18, 10, 0.46);
     }
 
+    @media (max-width: 767px) and (orientation: landscape) {
+      html {
+        scroll-snap-type: none;
+      }
+
+      .section {
+        min-height: auto;
+        padding-block: 3rem;
+      }
+
+      .card,
+      .intro .card {
+        transform: none;
+      }
+    }
+
     @keyframes slowZoom {
       from {
         transform: scale(1.05);
@@ -375,7 +400,8 @@
 
     @media (max-width: 420px) {
       .card {
-        padding: 16px 14px;
+        width: min(100%, 23rem);
+        padding: 15px 13px;
       }
 
       .hero-names {
@@ -400,22 +426,22 @@
 
       .message {
         --bg-position: center, center, center, 58% center;
-        --bg-size: auto, auto, auto, 152% auto;
+        --bg-size: auto, auto, auto, 146% auto;
       }
 
       .date {
         --bg-position: center, center, center, 48% 20%;
-        --bg-size: auto, auto, auto, 148% auto;
+        --bg-size: auto, auto, auto, 144% auto;
       }
 
       .venue {
         --bg-position: center, center, center, 54% 28%;
-        --bg-size: auto, auto, auto, 148% auto;
+        --bg-size: auto, auto, auto, 144% auto;
       }
 
       .closing {
         --bg-position: center, center, center, 50% 18%;
-        --bg-size: auto, auto, auto, 152% auto;
+        --bg-size: auto, auto, auto, 146% auto;
       }
     }
 
@@ -447,7 +473,7 @@
         <p class="eyebrow">Together With Their Families</p>
         <h1 class="script hero-names">
           <span class="hero-name">Bharath Akash</span>
-          <span class="hero-amp" aria-hidden="true">∞</span>
+          <span class="hero-amp" aria-hidden="true">&infin;</span>
           <span class="hero-name">Vishnu Priya</span>
         </h1>
         <p class="subtitle">invite you to witness the beginning of their forever.</p>
