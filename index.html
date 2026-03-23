@@ -17,7 +17,7 @@
       --line: rgba(255, 255, 255, 0.12);
       --shadow: 0 22px 64px rgba(0, 0, 0, 0.34);
       --gopuram-hero: url("https://commons.wikimedia.org/wiki/Special:FilePath/Murugan%20Temple%20Gopuram.jpg");
-      --jasmine-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Thoranam%20decoration.jpg");
+      --jasmine-photo: url("./assets/Wedding-invite-image.jpg");
       --diya-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Marigold%20Flowers%20as%20garland.jpg");
       --corridor-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Rameswaram%20Temple%20Corridor.jpg");
       --closing-temple: url("./assets/save-the-date.jpg");
@@ -294,11 +294,11 @@
 
     .message {
       --bg-image:
-        linear-gradient(180deg, rgba(8, 5, 4, 0.14), rgba(8, 5, 4, 0.68)),
-        radial-gradient(circle at 50% 22%, rgba(255, 230, 176, 0.14), transparent 28%),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.28)),
+        linear-gradient(180deg, rgba(8, 5, 4, 0.12), rgba(8, 5, 4, 0.44)),
+        radial-gradient(circle at 50% 22%, rgba(255, 244, 222, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.14)),
         var(--jasmine-photo);
-      --bg-position: center, center, center, 50% 18%;
+      --bg-position: center, center, center, center;
       --bg-size: auto, auto, auto, cover;
     }
 
@@ -369,6 +369,10 @@
       background: rgba(12, 10, 10, 0.58);
     }
 
+    .message .card {
+      background: linear-gradient(180deg, rgba(10, 10, 10, 0.28), rgba(10, 10, 10, 0.42));
+    }
+
     .closing .card {
       background: linear-gradient(180deg, rgba(12, 10, 10, 0.34), rgba(12, 10, 10, 0.5));
     }
@@ -429,7 +433,7 @@
       }
 
       .message {
-        --bg-position: center, center, center, 50% 14%;
+        --bg-position: center, center, center, center;
         --bg-size: auto, auto, auto, cover;
       }
 
@@ -514,7 +518,7 @@
       }
 
       .message {
-        --bg-position: center, center, center, 50% 12%;
+        --bg-position: center, center, center, center;
       }
 
       .date {
