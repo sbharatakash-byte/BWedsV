@@ -449,6 +449,88 @@
       }
     }
 
+    @media (max-width: 480px) and (orientation: portrait) {
+      .section {
+        padding-inline: 14px;
+        padding-block: 22px;
+      }
+
+      .card {
+        width: min(100%, 22rem);
+        border-radius: 18px;
+      }
+
+      .title {
+        font-size: clamp(1.25rem, 6vw, 1.9rem);
+      }
+
+      .subtitle,
+      .body {
+        max-width: 16.5rem;
+        font-size: clamp(0.8rem, 3.4vw, 0.92rem);
+        line-height: 1.32;
+      }
+
+      .meta {
+        font-size: clamp(0.9rem, 3.8vw, 1.05rem);
+      }
+
+      .link-button {
+        padding: 8px 12px;
+        font-size: 0.68rem;
+      }
+    }
+
+    @media (max-width: 390px) and (orientation: portrait) {
+      .section {
+        padding-inline: 12px;
+      }
+
+      .card {
+        width: min(100%, 20.5rem);
+        padding: 14px 12px;
+      }
+
+      .eyebrow {
+        letter-spacing: 0.16rem;
+      }
+
+      .intro .script {
+        font-size: clamp(1.35rem, 8vw, 2rem);
+      }
+
+      .hero-name {
+        max-width: 9ch;
+      }
+
+      .title {
+        font-size: clamp(1.18rem, 6.4vw, 1.7rem);
+      }
+
+      .subtitle,
+      .body {
+        max-width: 15rem;
+        font-size: clamp(0.78rem, 3.6vw, 0.88rem);
+      }
+
+      .message {
+        --bg-position: center, center, center, 60% center;
+      }
+
+      .date {
+        --bg-position: center, center, center, 50% 24%;
+      }
+
+      .venue {
+        --bg-position: center, center, center, 56% 30%;
+      }
+
+      .closing {
+        --bg-position: center, center, center, 50% 86%;
+        --bg-size: auto, auto, auto, 132% auto;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
