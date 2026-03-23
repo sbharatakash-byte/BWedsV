@@ -18,7 +18,7 @@
       --shadow: 0 22px 64px rgba(0, 0, 0, 0.34);
       --gopuram-hero: url("https://commons.wikimedia.org/wiki/Special:FilePath/Murugan%20Temple%20Gopuram.jpg");
       --jasmine-photo: url("./assets/Wedding-invite-image.jpg");
-      --diya-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Marigold%20Flowers%20as%20garland.jpg");
+      --diya-photo: url("./assets/Venue-image.jpg");
       --corridor-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Rameswaram%20Temple%20Corridor.jpg");
       --closing-temple: url("./assets/save-the-date.jpg");
     }
@@ -186,6 +186,38 @@
       color: var(--accent);
     }
 
+    .event-grid {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.95rem;
+    }
+
+    .event-card {
+      padding: 0.95rem 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .event-title {
+      margin: 0;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .event-meta,
+    .event-location {
+      margin: 0.35rem 0 0;
+      font-size: clamp(0.8rem, 2.8vw, 0.96rem);
+      line-height: 1.35;
+      color: var(--muted);
+    }
+
+    .event-location {
+      color: var(--accent);
+    }
+
     .link-button {
       display: inline-block;
       margin-top: 12px;
@@ -251,6 +283,10 @@
         font-size: clamp(0.98rem, 1.6vw, 1.18rem);
       }
 
+      .event-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .intro .card {
         max-width: 33rem;
         transform: translateY(30px) scale(0.98);
@@ -304,11 +340,11 @@
 
     .date {
       --bg-image:
-        linear-gradient(180deg, rgba(18, 10, 6, 0.1), rgba(10, 8, 6, 0.54)),
-        radial-gradient(circle at 50% 24%, rgba(255, 214, 140, 0.16), transparent 24%),
-        linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.12)),
+        linear-gradient(180deg, rgba(18, 10, 6, 0.14), rgba(10, 8, 6, 0.58)),
+        radial-gradient(circle at 50% 24%, rgba(255, 214, 140, 0.1), transparent 24%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.18)),
         var(--diya-photo);
-      --bg-position: center, center, center, 50% 18%;
+      --bg-position: center, center, center, center;
       --bg-size: auto, auto, auto, cover;
     }
 
@@ -378,7 +414,8 @@
     }
 
     .date .card {
-      background: linear-gradient(180deg, rgba(22, 16, 12, 0.34), rgba(14, 10, 8, 0.48));
+      width: min(100%, 34rem);
+      background: linear-gradient(180deg, rgba(22, 16, 12, 0.28), rgba(14, 10, 8, 0.44));
     }
 
     @media (max-width: 767px) and (orientation: landscape) {
@@ -438,7 +475,7 @@
       }
 
       .date {
-        --bg-position: center, center, center, 50% 16%;
+        --bg-position: center, center, center, center;
         --bg-size: auto, auto, auto, cover;
       }
 
@@ -523,7 +560,7 @@
       }
 
       .date {
-        --bg-position: center, center, center, 50% 14%;
+        --bg-position: center, center, center, center;
       }
 
       .venue {
@@ -581,10 +618,20 @@
 
     <section class="section date" id="date-time">
       <div class="card">
-        <p class="eyebrow">Date &amp; Time</p>
-        <h2 class="title">Sunday, 14 December 2026</h2>
-        <p class="meta">6:30 PM onwards</p>
-        <p class="body">Join us for an evening wrapped in blessings, music, and memories.</p>
+        <p class="eyebrow">Wedding Events</p>
+        <h2 class="title">Celebrate With Us</h2>
+        <div class="event-grid">
+          <div class="event-card">
+            <h3 class="event-title">Engagement &amp; Reception</h3>
+            <p class="event-meta">Sunday, 14 December 2026<br>6:30 PM onwards</p>
+            <p class="event-location">The Grand Blossom Hall, Jubilee Hills, Hyderabad</p>
+          </div>
+          <div class="event-card">
+            <h3 class="event-title">Muhurtham</h3>
+            <p class="event-meta">Monday, 15 December 2026<br>7:12 AM onwards</p>
+            <p class="event-location">Sri Murugan Temple, Hyderabad</p>
+          </div>
+        </div>
       </div>
     </section>
 
