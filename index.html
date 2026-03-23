@@ -10,12 +10,12 @@
 
     :root {
       --bg: #090909;
-      --panel: linear-gradient(180deg, rgba(18, 18, 18, 0.52), rgba(10, 10, 10, 0.64));
+      --panel: linear-gradient(180deg, rgba(18, 18, 18, 0.24), rgba(10, 10, 10, 0.34));
       --text: #f6efe7;
       --muted: #d8c8b5;
       --accent: #f2d6b3;
-      --line: rgba(255, 255, 255, 0.12);
-      --shadow: 0 22px 64px rgba(0, 0, 0, 0.34);
+      --line: rgba(255, 255, 255, 0.18);
+      --shadow: 0 20px 48px rgba(0, 0, 0, 0.22);
       --gopuram-hero: url("https://commons.wikimedia.org/wiki/Special:FilePath/Murugan%20Temple%20Gopuram.jpg");
       --jasmine-photo: url("./assets/Wedding-invite-image.jpg");
       --diya-photo: url("./assets/Venue-image.jpg");
@@ -78,7 +78,7 @@
       background-position: var(--bg-position, center);
       background-size: var(--bg-size, cover);
       background-repeat: no-repeat;
-      filter: saturate(0.98) contrast(1.04) brightness(0.98);
+      filter: saturate(1) contrast(1.03) brightness(1.02);
       transform: scale(1.08);
       animation: slowZoom 18s ease-in-out infinite alternate;
       z-index: -2;
@@ -89,8 +89,8 @@
       position: absolute;
       inset: 0;
       background:
-        linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.52)),
-        radial-gradient(circle at center, transparent 18%, rgba(0, 0, 0, 0.34) 100%);
+        linear-gradient(180deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.34)),
+        radial-gradient(circle at center, transparent 18%, rgba(0, 0, 0, 0.18) 100%);
       z-index: -1;
     }
 
@@ -100,7 +100,7 @@
       margin-inline: auto;
       border: 1px solid var(--line);
       background: var(--panel);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       border-radius: 22px;
       box-shadow: var(--shadow);
       text-align: center;
@@ -156,7 +156,7 @@
       margin: 0;
       font-size: clamp(1.35rem, 4vw, 2rem);
       line-height: 1;
-      color: rgba(242, 214, 179, 0.92);
+      color: #b68cff;
       text-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
     }
 
@@ -366,7 +366,7 @@
         linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.08)),
         var(--jasmine-photo);
       --bg-position: center, center, center, center;
-      --bg-size: auto, auto, auto, contain;
+      --bg-size: auto, auto, auto, cover;
     }
 
     .date {
@@ -396,12 +396,12 @@
         linear-gradient(180deg, transparent 12%, rgba(0, 0, 0, 0.14) 42%, rgba(0, 0, 0, 0.54) 100%),
         var(--closing-temple);
       --bg-position: center, center, center, center;
-      --bg-size: auto, auto, auto, contain;
+      --bg-size: auto, auto, auto, cover;
     }
 
     .intro .card,
     .venue .card {
-      background: rgba(12, 10, 10, 0.42);
+      background: rgba(12, 10, 10, 0.24);
     }
 
     .venue .card {
@@ -415,7 +415,7 @@
       padding-bottom: 1.2rem;
       transform: translateY(34px) scale(0.98);
       background:
-        linear-gradient(180deg, rgba(14, 10, 8, 0.42), rgba(14, 10, 8, 0.58));
+        linear-gradient(180deg, rgba(14, 10, 8, 0.2), rgba(14, 10, 8, 0.3));
     }
 
     .intro .script {
@@ -438,20 +438,20 @@
 
     .message .card,
     .closing .card {
-      background: rgba(12, 10, 10, 0.58);
+      background: rgba(12, 10, 10, 0.26);
     }
 
     .message .card {
-      background: linear-gradient(180deg, rgba(10, 10, 10, 0.34), rgba(10, 10, 10, 0.48));
+      background: linear-gradient(180deg, rgba(10, 10, 10, 0.18), rgba(10, 10, 10, 0.28));
     }
 
     .closing .card {
-      background: linear-gradient(180deg, rgba(12, 10, 10, 0.34), rgba(12, 10, 10, 0.5));
+      background: linear-gradient(180deg, rgba(12, 10, 10, 0.2), rgba(12, 10, 10, 0.3));
     }
 
     .date .card {
       width: min(100%, 34rem);
-      background: linear-gradient(180deg, rgba(22, 16, 12, 0.28), rgba(14, 10, 8, 0.44));
+      background: linear-gradient(180deg, rgba(22, 16, 12, 0.18), rgba(14, 10, 8, 0.28));
     }
 
     @media (max-width: 767px) and (orientation: landscape) {
@@ -507,7 +507,7 @@
 
       .message {
         --bg-position: center, center, center, center;
-        --bg-size: auto, auto, auto, contain;
+        --bg-size: auto, auto, auto, cover;
       }
 
       .date {
@@ -522,7 +522,7 @@
 
       .closing {
         --bg-position: center, center, center, center;
-        --bg-size: auto, auto, auto, contain;
+        --bg-size: auto, auto, auto, cover;
       }
     }
 
@@ -592,7 +592,7 @@
 
       .message {
         --bg-position: center, center, center, center;
-        --bg-size: auto, auto, auto, contain;
+        --bg-size: auto, auto, auto, cover;
       }
 
       .date {
@@ -605,7 +605,7 @@
 
       .closing {
         --bg-position: center, center, center, center;
-        --bg-size: auto, auto, auto, contain;
+        --bg-size: auto, auto, auto, cover;
       }
     }
 
@@ -637,7 +637,7 @@
         <p class="eyebrow">Together With Their Families</p>
         <h1 class="script hero-names">
           <span class="hero-name">Bharath Akash</span>
-          <span class="hero-amp" aria-hidden="true">&infin;</span>
+          <span class="hero-amp" aria-hidden="true">&hearts;</span>
           <span class="hero-name">Vishnu Priya</span>
         </h1>
         <p class="subtitle">invite you to witness the beginning of their forever.</p>
