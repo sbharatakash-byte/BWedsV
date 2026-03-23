@@ -19,7 +19,7 @@
       --gopuram-hero: url("https://commons.wikimedia.org/wiki/Special:FilePath/Murugan%20Temple%20Gopuram.jpg");
       --jasmine-photo: url("./assets/Wedding-invite-image.jpg");
       --diya-photo: url("./assets/Venue-image.jpg");
-      --corridor-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Rameswaram%20Temple%20Corridor.jpg");
+      --corridor-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/South%20Indian%20wedding%202.jpg");
       --closing-temple: url("./assets/save-the-date.jpg");
     }
 
@@ -218,6 +218,33 @@
       color: var(--accent);
     }
 
+    .venue-grid {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.95rem;
+    }
+
+    .venue-item {
+      padding: 0.95rem 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .venue-title {
+      margin: 0;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .venue-place {
+      margin: 0.35rem 0 0;
+      font-size: clamp(0.82rem, 2.8vw, 0.96rem);
+      line-height: 1.35;
+      color: var(--muted);
+    }
+
     .link-button {
       display: inline-block;
       margin-top: 12px;
@@ -287,6 +314,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .venue-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .intro .card {
         max-width: 33rem;
         transform: translateY(30px) scale(0.98);
@@ -350,11 +381,11 @@
 
     .venue {
       --bg-image:
-        linear-gradient(180deg, rgba(8, 6, 4, 0.14), rgba(8, 6, 4, 0.78)),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.62), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.58)),
-        radial-gradient(circle at 50% 24%, rgba(233, 183, 129, 0.18), transparent 26%),
+        linear-gradient(180deg, rgba(8, 6, 4, 0.12), rgba(8, 6, 4, 0.64)),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.46), transparent 26%, transparent 74%, rgba(0, 0, 0, 0.42)),
+        radial-gradient(circle at 50% 24%, rgba(233, 183, 129, 0.14), transparent 26%),
         var(--corridor-photo);
-      --bg-position: center, center, center, center 28%;
+      --bg-position: center, center, center, center;
       --bg-size: auto, auto, auto, cover;
     }
 
@@ -371,6 +402,11 @@
     .intro .card,
     .venue .card {
       background: rgba(12, 10, 10, 0.42);
+    }
+
+    .venue .card {
+      width: min(100%, 34rem);
+      background: linear-gradient(180deg, rgba(12, 10, 10, 0.32), rgba(12, 10, 10, 0.48));
     }
 
     .intro .card {
@@ -480,8 +516,8 @@
       }
 
       .venue {
-        --bg-position: center, center, center, 54% 28%;
-        --bg-size: auto, auto, auto, 144% auto;
+        --bg-position: center, center, center, center;
+        --bg-size: auto, auto, auto, cover;
       }
 
       .closing {
@@ -564,7 +600,7 @@
       }
 
       .venue {
-        --bg-position: center, center, center, 56% 30%;
+        --bg-position: center, center, center, center;
       }
 
       .closing {
@@ -638,9 +674,19 @@
     <section class="section venue" id="venue">
       <div class="card">
         <p class="eyebrow">Venue</p>
-        <h2 class="title">The Grand Blossom Hall</h2>
-        <p class="body">Lake View Road, Jubilee Hills, Hyderabad</p>
-        <a class="link-button" href="https://maps.google.com/?q=The+Grand+Blossom+Hall+Jubilee+Hills+Hyderabad" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+        <h2 class="title">Event Venues</h2>
+        <div class="venue-grid">
+          <div class="venue-item">
+            <h3 class="venue-title">Engagement &amp; Reception</h3>
+            <p class="venue-place">Taj Marriage Hall, Trichy</p>
+            <a class="link-button" href="https://maps.app.goo.gl/WGpFDByG69NqGs419" target="_blank" rel="noopener noreferrer">Open Map</a>
+          </div>
+          <div class="venue-item">
+            <h3 class="venue-title">Muhurtham</h3>
+            <p class="venue-place">Vayalur Murugan Kovil, Trichy</p>
+            <a class="link-button" href="https://maps.app.goo.gl/aDm6m7hPs39vVkYs9" target="_blank" rel="noopener noreferrer">Open Map</a>
+          </div>
+        </div>
       </div>
     </section>
 
