@@ -324,12 +324,12 @@
 
     .closing {
       --bg-image:
-        linear-gradient(180deg, rgba(10, 8, 6, 0.28), rgba(10, 8, 6, 0.86)),
+        linear-gradient(180deg, rgba(10, 8, 6, 0.16), rgba(10, 8, 6, 0.64)),
         radial-gradient(circle at 50% 26%, rgba(255, 221, 184, 0.18), transparent 26%),
-        linear-gradient(180deg, transparent 10%, rgba(0, 0, 0, 0.32) 48%, rgba(0, 0, 0, 0.76) 100%),
+        linear-gradient(180deg, transparent 12%, rgba(0, 0, 0, 0.14) 42%, rgba(0, 0, 0, 0.54) 100%),
         var(--closing-temple);
-      --bg-position: center, center, center, 50% 62%;
-      --bg-size: auto, auto, auto, cover;
+      --bg-position: center, center, center, 50% 84%;
+      --bg-size: auto, auto, auto, 100% auto;
     }
 
     .intro .card,
@@ -367,6 +367,10 @@
     .message .card,
     .closing .card {
       background: rgba(12, 10, 10, 0.58);
+    }
+
+    .closing .card {
+      background: linear-gradient(180deg, rgba(12, 10, 10, 0.34), rgba(12, 10, 10, 0.5));
     }
 
     .date .card {
@@ -440,8 +444,8 @@
       }
 
       .closing {
-        --bg-position: center, center, center, 50% 66%;
-        --bg-size: auto, auto, auto, 146% auto;
+        --bg-position: center, center, center, 50% 84%;
+        --bg-size: auto, auto, auto, 122% auto;
       }
     }
 
