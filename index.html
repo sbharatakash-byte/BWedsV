@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A cinematic wedding invitation website ready for GitHub Pages.">
+  <title>Wedding Invitation</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap');
+
+    :root {
+      --bg: #090909;
+      --panel: rgba(14, 14, 14, 0.56);
+      --text: #f6efe7;
+      --muted: #d8c8b5;
+      --accent: #f2d6b3;
+      --line: rgba(255, 255, 255, 0.12);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      --gopuram-hero: url("https://commons.wikimedia.org/wiki/Special:FilePath/Murugan%20Temple%20Gopuram.jpg");
+      --jasmine-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Bunch%20of%20jasmine%20flowers.jpg");
+      --diya-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Diya%20oil%20lamp.jpg");
+      --corridor-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Rameswaram%20Temple%20Corridor.jpg");
+      --closing-temple: url("https://commons.wikimedia.org/wiki/Special:FilePath/The%20Raja%20Gopuram%20at%20Thiruchendur%20Murugan%20Temple.JPG");
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(120, 89, 62, 0.24), transparent 30%),
+        radial-gradient(circle at bottom, rgba(84, 60, 44, 0.2), transparent 28%),
+        linear-gradient(180deg, #050505 0%, #111 100%);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    main {
+      position: relative;
+    }
+
+    .section {
+      position: relative;
+      min-height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: -10%;
+      background-image: var(--bg-image, linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0)));
+      background-position: var(--bg-position, center);
+      background-size: var(--bg-size, cover);
+      background-repeat: no-repeat;
+      filter: saturate(0.95) contrast(1.05);
+      transform: scale(1.08);
+      animation: slowZoom 18s ease-in-out infinite alternate;
+      z-index: -2;
+    }
+
+    .section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.55)),
+        radial-gradient(circle at center, transparent 20%, rgba(0, 0, 0, 0.38) 100%);
+      z-index: -1;
+    }
+
+    .card {
+      width: min(100%, 460px);
+      padding: 18px 16px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition:
+        opacity 0.9s ease,
+        transform 0.9s ease,
+        border-color 0.7s ease;
+    }
+
+    .section.is-visible .card {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      border-color: rgba(242, 214, 179, 0.25);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      font-size: 0.64rem;
+      letter-spacing: 0.22rem;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .script {
+      margin: 0;
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.9rem, 7vw, 3.8rem);
+      font-weight: 400;
+      line-height: 1;
+      color: #fff7ef;
+    }
+
+    .hero-names {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.08rem;
+      margin: 0;
+      text-align: center;
+    }
+
+    .hero-name {
+      display: block;
+      text-wrap: balance;
+      text-shadow: 0 8px 30px rgba(0, 0, 0, 0.34);
+    }
+
+    .hero-amp {
+      display: block;
+      margin: 0;
+      font-size: clamp(1.35rem, 4vw, 2rem);
+      line-height: 1;
+      color: rgba(242, 214, 179, 0.92);
+      text-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(1.45rem, 6vw, 2.45rem);
+      font-weight: 600;
+      letter-spacing: 0.02rem;
+      line-height: 1.12;
+    }
+
+    .subtitle,
+    .body {
+      margin: 8px auto 0;
+      max-width: 18rem;
+      font-size: clamp(0.84rem, 3vw, 1rem);
+      line-height: 1.34;
+      color: var(--muted);
+    }
+
+    .meta {
+      margin-top: 10px;
+      font-size: clamp(0.96rem, 3.4vw, 1.18rem);
+      line-height: 1.28;
+      color: var(--accent);
+    }
+
+    .link-button {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 13px;
+      border: 1px solid rgba(242, 214, 179, 0.45);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08rem;
+      text-transform: uppercase;
+      transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .link-button:hover,
+    .link-button:focus-visible {
+      background: rgba(242, 214, 179, 0.12);
+      border-color: rgba(242, 214, 179, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .scroll-hint {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      padding: 7px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.32);
+      font-size: 0.68rem;
+      letter-spacing: 0.18rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      z-index: 10;
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .scroll-hint.is-hidden {
+      opacity: 0;
+      transform: translateX(-50%) translateY(12px);
+    }
+
+    .intro {
+      --bg-image:
+        linear-gradient(180deg, rgba(8, 6, 4, 0.1), rgba(8, 6, 4, 0.72)),
+        radial-gradient(circle at 50% 18%, rgba(245, 205, 157, 0.24), transparent 22%),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.5), transparent 36%, transparent 64%, rgba(0, 0, 0, 0.46)),
+        var(--gopuram-hero);
+      --bg-position: center, center 20%, center, center 8%;
+      --bg-size: auto, auto, auto, 112% auto;
+    }
+
+    .message {
+      --bg-image:
+        linear-gradient(180deg, rgba(8, 5, 4, 0.24), rgba(8, 5, 4, 0.84)),
+        radial-gradient(circle at 50% 30%, rgba(255, 244, 222, 0.12), transparent 28%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.46)),
+        var(--jasmine-photo);
+      --bg-position: center, center, center, 60% center;
+      --bg-size: auto, auto, auto, 130% auto;
+    }
+
+    .date {
+      --bg-image:
+        linear-gradient(180deg, rgba(18, 10, 6, 0.18), rgba(10, 8, 6, 0.82)),
+        radial-gradient(circle at 50% 42%, rgba(255, 208, 153, 0.22), transparent 24%),
+        linear-gradient(0deg, rgba(70, 42, 20, 0.34), rgba(0, 0, 0, 0.1)),
+        var(--diya-photo);
+      --bg-position: center, center, center, 50% 24%;
+      --bg-size: auto, auto, auto, 126% auto;
+    }
+
+    .venue {
+      --bg-image:
+        linear-gradient(180deg, rgba(8, 6, 4, 0.14), rgba(8, 6, 4, 0.78)),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.62), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.58)),
+        radial-gradient(circle at 50% 24%, rgba(233, 183, 129, 0.18), transparent 26%),
+        var(--corridor-photo);
+      --bg-position: center, center, center, center 30%;
+      --bg-size: auto, auto, auto, 126% auto;
+    }
+
+    .closing {
+      --bg-image:
+        linear-gradient(180deg, rgba(10, 8, 6, 0.28), rgba(10, 8, 6, 0.86)),
+        radial-gradient(circle at 50% 26%, rgba(255, 221, 184, 0.18), transparent 26%),
+        linear-gradient(180deg, transparent 10%, rgba(0, 0, 0, 0.32) 48%, rgba(0, 0, 0, 0.76) 100%),
+        var(--closing-temple);
+      --bg-position: center, center, center, 50% 18%;
+      --bg-size: auto, auto, auto, 130% auto;
+    }
+
+    .intro .card,
+    .venue .card {
+      background: rgba(12, 10, 10, 0.42);
+    }
+
+    .intro .card {
+      max-width: 500px;
+      padding-top: 22px;
+      padding-bottom: 22px;
+      transform: translateY(34px) scale(0.98);
+      background:
+        linear-gradient(180deg, rgba(14, 10, 8, 0.42), rgba(14, 10, 8, 0.58));
+    }
+
+    .intro .script {
+      font-size: clamp(1.65rem, 6vw, 2.95rem);
+      line-height: 1;
+    }
+
+    .intro .eyebrow {
+      margin-bottom: 10px;
+      letter-spacing: 0.24rem;
+    }
+
+    .intro .subtitle {
+      max-width: 16rem;
+      margin-top: 8px;
+      font-size: clamp(0.8rem, 2.8vw, 0.94rem);
+      letter-spacing: 0.02rem;
+      color: rgba(246, 239, 231, 0.82);
+    }
+
+    .message .card,
+    .closing .card {
+      background: rgba(12, 10, 10, 0.58);
+    }
+
+    .date .card {
+      background: rgba(28, 18, 10, 0.46);
+    }
+
+    @keyframes slowZoom {
+      from {
+        transform: scale(1.05);
+      }
+      to {
+        transform: scale(1.14);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .card {
+        padding: 16px 14px;
+      }
+
+      .hero-names {
+        gap: 0.12rem;
+      }
+
+      .hero-amp {
+        margin: 0;
+      }
+
+      .intro .card {
+        transform: translateY(22px) scale(0.98);
+      }
+
+      .intro .script {
+        font-size: clamp(1.45rem, 8vw, 2.3rem);
+      }
+
+      .message {
+        --bg-position: center, center, center, 58% center;
+        --bg-size: auto, auto, auto, 152% auto;
+      }
+
+      .date {
+        --bg-position: center, center, center, 48% 20%;
+        --bg-size: auto, auto, auto, 148% auto;
+      }
+
+      .venue {
+        --bg-position: center, center, center, 54% 28%;
+        --bg-size: auto, auto, auto, 148% auto;
+      }
+
+      .closing {
+        --bg-position: center, center, center, 50% 18%;
+        --bg-size: auto, auto, auto, 152% auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .section::before,
+      .card,
+      .scroll-hint {
+        animation: none;
+        transition: none;
+      }
+
+      .card {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-hint" id="scrollHint">Scroll</div>
+
+  <main>
+    <section class="section intro is-visible" id="home">
+      <div class="card">
+        <p class="eyebrow">Together With Their Families</p>
+        <h1 class="script hero-names">
+          <span class="hero-name">Bharath Akash</span>
+          <span class="hero-amp" aria-hidden="true">&amp;</span>
+          <span class="hero-name">Vishnu Priya</span>
+        </h1>
+        <p class="subtitle">invite you to witness the beginning of their forever.</p>
+      </div>
+    </section>
+
+    <section class="section message" id="invitation">
+      <div class="card">
+        <p class="eyebrow">Wedding Invitation</p>
+        <h2 class="title">A celebration of love, laughter, and a beautiful new chapter.</h2>
+        <p class="body">With joyful hearts, we request the pleasure of your presence as we exchange vows and celebrate this moment with the people we cherish most.</p>
+      </div>
+    </section>
+
+    <section class="section date" id="date-time">
+      <div class="card">
+        <p class="eyebrow">Date &amp; Time</p>
+        <h2 class="title">Sunday, 14 December 2026</h2>
+        <p class="meta">6:30 PM onwards</p>
+        <p class="body">Join us for an evening wrapped in blessings, music, and memories.</p>
+      </div>
+    </section>
+
+    <section class="section venue" id="venue">
+      <div class="card">
+        <p class="eyebrow">Venue</p>
+        <h2 class="title">The Grand Blossom Hall</h2>
+        <p class="body">Lake View Road, Jubilee Hills, Hyderabad</p>
+        <a class="link-button" href="https://maps.google.com/?q=The+Grand+Blossom+Hall+Jubilee+Hills+Hyderabad" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+      </div>
+    </section>
+
+    <section class="section closing" id="save-the-date">
+      <div class="card">
+        <p class="eyebrow">With Love</p>
+        <h2 class="script">Save the Date</h2>
+        <p class="body">Your presence will make our celebration complete. We cannot wait to share this unforgettable day with you.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+    const scrollHint = document.getElementById('scrollHint');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
+      });
+    }, {
+      threshold: 0.45
+    });
+
+    sections.forEach((section) => observer.observe(section));
+
+    const hideHint = () => {
+      if (window.scrollY > window.innerHeight * 0.35) {
+        scrollHint.classList.add('is-hidden');
+        window.removeEventListener('scroll', hideHint);
+      }
+    };
+
+    window.addEventListener('scroll', hideHint, { passive: true });
+  </script>
+</body>
+</html>
