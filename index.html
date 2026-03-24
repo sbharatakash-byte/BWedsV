@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A cinematic wedding invitation website ready for GitHub Pages.">
   <title>Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="./assets/Wedding-invite-image.jpg">
+  <link rel="preload" as="image" href="./assets/Venue-image.jpg">
+  <link rel="preload" as="image" href="./assets/save-the-date.jpg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap');
-
     :root {
       --bg: #090909;
       --panel: linear-gradient(180deg, rgba(18, 18, 18, 0.14), rgba(10, 10, 10, 0.22));
@@ -16,10 +20,10 @@
       --accent: #f2d6b3;
       --line: rgba(255, 255, 255, 0.16);
       --shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
-      --gopuram-hero: url("https://commons.wikimedia.org/wiki/Special:FilePath/Murugan%20Temple%20Gopuram.jpg");
+      --gopuram-hero: url("./assets/Wedding-invite-image.jpg");
       --jasmine-photo: url("./assets/Wedding-invite-image.jpg");
       --diya-photo: url("./assets/Venue-image.jpg");
-      --corridor-photo: url("https://commons.wikimedia.org/wiki/Special:FilePath/Rameswaram%20Temple%20Corridor.jpg");
+      --corridor-photo: url("./assets/save-the-date.jpg");
       --closing-temple: url("./assets/save-the-date.jpg");
     }
 
@@ -185,6 +189,17 @@
       filter: blur(0);
       border-color: rgba(242, 214, 179, 0.22);
       box-shadow: 0 24px 56px rgba(0, 0, 0, 0.24);
+    }
+
+    body.is-ready .section:first-of-type,
+    body.is-ready .section:first-of-type .card,
+    body.is-ready .section:first-of-type .eyebrow,
+    body.is-ready .section:first-of-type .title,
+    body.is-ready .section:first-of-type .script,
+    body.is-ready .section:first-of-type .subtitle,
+    body.is-ready .section:first-of-type .body,
+    body.is-ready .section:first-of-type .meta {
+      transition-delay: 0s;
     }
 
     .section.is-visible {
@@ -843,6 +858,7 @@
       .card {
         transform: translateY(26px) scale(0.97);
         backdrop-filter: blur(14px);
+        transition-duration: 0.65s;
       }
 
       .event-card,
@@ -867,6 +883,10 @@
 
       .section {
         transition-duration: 0.7s;
+      }
+
+      .section::before {
+        animation-duration: 12s;
       }
 
       .section.is-visible .event-card:nth-child(2),
@@ -1236,9 +1256,10 @@
     const sections = document.querySelectorAll('.section');
     const scrollHint = document.getElementById('scrollHint');
     const progressRail = document.getElementById('progressRail');
-    let activeSectionId = sections[0]?.id ?? null;
+    let activeSectionId = null;
     let transitionTimer;
     let ticking = false;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     sections.forEach((section) => {
       const dot = document.createElement('span');
@@ -1328,6 +1349,12 @@
       window.requestAnimationFrame(updateScrollEffects);
     };
 
+    const bootAnimations = () => {
+      document.body.classList.add('is-ready');
+      setActiveSection(sections[0]);
+      updateScrollEffects();
+    };
+
     const hideHint = () => {
       if (window.scrollY > window.innerHeight * 0.35) {
         scrollHint.classList.add('is-hidden');
@@ -1338,8 +1365,13 @@
     window.addEventListener('scroll', hideHint, { passive: true });
     window.addEventListener('scroll', handleScrollEffects, { passive: true });
     window.addEventListener('resize', handleScrollEffects);
-    setActiveSection(sections[0]);
-    updateScrollEffects();
+
+    if (document.readyState === 'complete' || prefersReducedMotion) {
+      bootAnimations();
+    } else {
+      window.addEventListener('load', bootAnimations, { once: true });
+      window.requestAnimationFrame(bootAnimations);
+    }
   </script>
 </body>
 </html>
