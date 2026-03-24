@@ -1312,9 +1312,22 @@
         <h2 class="script">Save the Date</h2>
         <p class="body">Your presence will make our celebration complete. We cannot wait to share this unforgettable day with you.</p>
         <div class="closing-actions">
-          <button class="calendar-button" id="calendarButton" type="button">
-            <span class="calendar-button-label">Add To Calendar</span>
-          </button>
+          <a
+            class="calendar-button"
+            href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Engagement%20-%20Bharath%20Akash%20and%20Vishnu%20Priya&dates=20260429T180000/20260429T210000&ctz=Asia%2FKolkata&details=Engagement%20celebration%20for%20Bharath%20Akash%20and%20Vishnu%20Priya.&location=Taj%20Marriage%20Hall%2C%20Trichy"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="calendar-button-label">Add Engagement</span>
+          </a>
+          <a
+            class="calendar-button"
+            href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Muhurtham%20and%20Reception%20-%20Bharath%20Akash%20and%20Vishnu%20Priya&dates=20260430T073100/20260430T120000&ctz=Asia%2FKolkata&details=Muhurtham%20at%207%3A31%20AM%20followed%20by%20Reception%20at%2011%3A00%20AM.&location=Vayalur%20Murugan%20Kovil%2C%20Trichy"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="calendar-button-label">Add Wedding Day</span>
+          </a>
         </div>
       </div>
     </section>
@@ -1324,7 +1337,6 @@
     const sections = document.querySelectorAll('.section');
     const scrollHint = document.getElementById('scrollHint');
     const progressRail = document.getElementById('progressRail');
-    const calendarButton = document.getElementById('calendarButton');
     let activeSectionId = null;
     let transitionTimer;
     let ticking = false;
@@ -1424,39 +1436,6 @@
       updateScrollEffects();
     };
 
-    const downloadCalendarEvent = () => {
-      const eventLines = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//BWedsV//Wedding Invitation//EN',
-        'CALSCALE:GREGORIAN',
-        'BEGIN:VEVENT',
-        'UID:bharath-vishnu-wedding-20260429@bwedsv',
-        'DTSTAMP:20260324T000000Z',
-        'DTSTART;TZID=Asia/Kolkata:20260429T180000',
-        'DTEND;TZID=Asia/Kolkata:20260430T120000',
-        'SUMMARY:Bharath Akash and Vishnu Priya Wedding Celebration',
-        'LOCATION:Taj Marriage Hall, Trichy and Vayalur Murugan Kovil, Trichy',
-        'DESCRIPTION:Engagement on 29 April at 6:00 PM, followed by Muhurtham on 30 April at 7:31 AM and Reception at 11:00 AM.',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
-
-      const eventBlob = new Blob([eventLines], { type: 'text/calendar;charset=utf-8' });
-      const downloadUrl = URL.createObjectURL(eventBlob);
-      const downloadLink = document.createElement('a');
-
-      downloadLink.href = downloadUrl;
-      downloadLink.download = 'bharath-vishnu-wedding.ics';
-      document.body.append(downloadLink);
-      downloadLink.click();
-      downloadLink.remove();
-
-      window.setTimeout(() => {
-        URL.revokeObjectURL(downloadUrl);
-      }, 1000);
-    };
-
     const hideHint = () => {
       if (window.scrollY > window.innerHeight * 0.35) {
         scrollHint.classList.add('is-hidden');
@@ -1467,7 +1446,6 @@
     window.addEventListener('scroll', hideHint, { passive: true });
     window.addEventListener('scroll', handleScrollEffects, { passive: true });
     window.addEventListener('resize', handleScrollEffects);
-    calendarButton?.addEventListener('click', downloadCalendarEvent);
 
     if (document.readyState === 'complete' || prefersReducedMotion) {
       bootAnimations();
