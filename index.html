@@ -264,6 +264,7 @@
       display: block;
       text-wrap: balance;
       max-width: 12ch;
+      white-space: nowrap;
       text-shadow: 0 8px 30px rgba(0, 0, 0, 0.34);
       animation: heroGlow 4.8s ease-in-out infinite;
     }
@@ -819,7 +820,8 @@
       }
 
       .hero-name {
-        max-width: 10ch;
+        max-width: none;
+        font-size: clamp(1.3rem, 8.2vw, 2.18rem);
       }
 
       .message {
@@ -1001,7 +1003,8 @@
       }
 
       .hero-name {
-        max-width: 9ch;
+        max-width: none;
+        font-size: clamp(1.16rem, 7.8vw, 1.72rem);
       }
 
       .title {
