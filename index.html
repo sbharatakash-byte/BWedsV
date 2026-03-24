@@ -29,7 +29,7 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-snap-type: y mandatory;
+      scroll-snap-type: y proximity;
     }
 
     body {
@@ -58,7 +58,6 @@
       min-height: 100vh;
       min-height: 100svh;
       scroll-snap-align: start;
-      scroll-snap-stop: always;
       display: grid;
       place-items: center;
       padding: clamp(18px, 4vw, 32px);
@@ -71,6 +70,7 @@
         opacity 0.85s ease,
         filter 0.85s ease,
         transform 0.85s ease;
+      will-change: transform, opacity, filter;
     }
 
     .section > * {
@@ -87,9 +87,10 @@
       background-size: var(--bg-size, cover);
       background-repeat: no-repeat;
       filter: saturate(1) contrast(1.03) brightness(1.02);
-      transform: scale(1.08);
+      transform: translate3d(0, var(--parallax-shift, 0px), 0) scale(var(--bg-scale, 1.08));
       animation: slowZoom 18s ease-in-out infinite alternate;
       z-index: -2;
+      transition: transform 0.8s ease-out, filter 0.8s ease-out;
     }
 
     .section::after {
@@ -143,6 +144,10 @@
       opacity: 1;
       filter: saturate(1.02) blur(0);
       transform: scale(1);
+    }
+
+    .section.is-active::before {
+      filter: saturate(1.06) contrast(1.05) brightness(1.05);
     }
 
     .section.is-active::after {
@@ -370,6 +375,39 @@
     }
 
     body.is-transitioning .section-transition-glow {
+      opacity: 1;
+    }
+
+    .progress-rail {
+      position: fixed;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 11;
+      pointer-events: none;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.28);
+      box-shadow: 0 0 0 0 rgba(242, 214, 179, 0.45);
+      transition:
+        transform 0.35s ease,
+        background-color 0.35s ease,
+        box-shadow 0.35s ease,
+        opacity 0.35s ease;
+      opacity: 0.7;
+    }
+
+    .progress-dot.is-active {
+      background: var(--accent);
+      transform: scale(1.7);
+      box-shadow: 0 0 0 6px rgba(242, 214, 179, 0.14);
       opacity: 1;
     }
 
@@ -622,6 +660,10 @@
     }
 
     @media (max-width: 767px) {
+      html {
+        scroll-snap-type: y proximity;
+      }
+
       .card {
         transform: translateY(26px) scale(0.97);
       }
@@ -642,6 +684,11 @@
       .section.is-visible .event-card:nth-child(2),
       .section.is-visible .venue-item:nth-child(2) {
         transition-delay: 0.12s;
+      }
+
+      .progress-rail {
+        right: 12px;
+        gap: 10px;
       }
     }
 
@@ -739,7 +786,8 @@
       .scroll-hint,
       .event-card,
       .venue-item,
-      .section-transition-glow {
+      .section-transition-glow,
+      .progress-dot {
         animation: none;
         transition: none;
       }
@@ -754,12 +802,17 @@
         transform: none;
         opacity: 1;
       }
+
+      .section::before {
+        transform: scale(1.08);
+      }
     }
   </style>
 </head>
 <body>
   <div class="scroll-hint" id="scrollHint">Scroll</div>
   <div class="section-transition-glow" aria-hidden="true"></div>
+  <div class="progress-rail" id="progressRail" aria-hidden="true"></div>
 
   <main>
     <section class="section intro is-visible" id="home">
@@ -832,8 +885,19 @@
   <script>
     const sections = document.querySelectorAll('.section');
     const scrollHint = document.getElementById('scrollHint');
+    const progressRail = document.getElementById('progressRail');
     let activeSectionId = sections[0]?.id ?? null;
     let transitionTimer;
+    let ticking = false;
+
+    sections.forEach((section) => {
+      const dot = document.createElement('span');
+      dot.className = 'progress-dot';
+      dot.dataset.target = section.id;
+      progressRail.append(dot);
+    });
+
+    const progressDots = progressRail.querySelectorAll('.progress-dot');
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -857,6 +921,10 @@
 
       sections.forEach((panel) => {
         panel.classList.toggle('is-active', panel === section);
+      });
+
+      progressDots.forEach((dot) => {
+        dot.classList.toggle('is-active', dot.dataset.target === section.id);
       });
 
       transitionTimer = window.setTimeout(() => {
@@ -883,6 +951,33 @@
 
     sections.forEach((section) => activeObserver.observe(section));
 
+    const updateScrollEffects = () => {
+      const viewportHeight = window.innerHeight || 1;
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const sectionCenter = rect.top + (rect.height / 2);
+        const distanceFromCenter = (sectionCenter - (viewportHeight / 2)) / viewportHeight;
+        const clampedDistance = Math.max(-1, Math.min(1, distanceFromCenter));
+        const travel = clampedDistance * -42;
+        const scale = 1.08 + ((1 - Math.abs(clampedDistance)) * 0.06);
+
+        section.style.setProperty('--parallax-shift', `${travel.toFixed(2)}px`);
+        section.style.setProperty('--bg-scale', scale.toFixed(3));
+      });
+
+      ticking = false;
+    };
+
+    const handleScrollEffects = () => {
+      if (ticking) {
+        return;
+      }
+
+      ticking = true;
+      window.requestAnimationFrame(updateScrollEffects);
+    };
+
     const hideHint = () => {
       if (window.scrollY > window.innerHeight * 0.35) {
         scrollHint.classList.add('is-hidden');
@@ -891,6 +986,10 @@
     };
 
     window.addEventListener('scroll', hideHint, { passive: true });
+    window.addEventListener('scroll', handleScrollEffects, { passive: true });
+    window.addEventListener('resize', handleScrollEffects);
+    setActiveSection(sections[0]);
+    updateScrollEffects();
   </script>
 </body>
 </html>
