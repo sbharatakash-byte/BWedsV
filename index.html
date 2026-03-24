@@ -250,6 +250,7 @@
       text-wrap: balance;
       max-width: 12ch;
       text-shadow: 0 8px 30px rgba(0, 0, 0, 0.34);
+      animation: heroGlow 4.8s ease-in-out infinite;
     }
 
     .hero-amp {
@@ -259,6 +260,7 @@
       line-height: 1;
       color: rgba(242, 214, 179, 0.92);
       text-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      animation: ampPulse 3.6s ease-in-out infinite;
     }
 
     .title {
@@ -424,7 +426,9 @@
       transition:
         transform 0.25s ease,
         background-color 0.25s ease,
-        border-color 0.25s ease;
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+      animation: buttonBreathe 3.4s ease-in-out infinite;
     }
 
     .link-button:hover,
@@ -432,6 +436,7 @@
       background: rgba(242, 214, 179, 0.12);
       border-color: rgba(242, 214, 179, 0.7);
       transform: translateY(-2px);
+      box-shadow: 0 14px 24px rgba(0, 0, 0, 0.18);
     }
 
     .scroll-hint {
@@ -454,6 +459,38 @@
     .scroll-hint.is-hidden {
       opacity: 0;
       transform: translateX(-50%) translateY(12px);
+    }
+
+    .intro-orb {
+      position: absolute;
+      width: clamp(180px, 28vw, 360px);
+      height: clamp(180px, 28vw, 360px);
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 232, 203, 0.26), rgba(255, 232, 203, 0.05) 48%, transparent 70%);
+      filter: blur(10px);
+      opacity: 0.8;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation: orbDrift 10s ease-in-out infinite alternate;
+    }
+
+    .intro-orb.left {
+      top: 14%;
+      left: 6%;
+    }
+
+    .intro-orb.right {
+      right: 4%;
+      bottom: 14%;
+      animation-delay: -4s;
+    }
+
+    .intro .card {
+      transform-origin: center center;
+    }
+
+    .intro.is-active .card {
+      animation: heroCardBreath 5.6s ease-in-out infinite;
     }
 
     .section-transition-glow {
@@ -826,6 +863,12 @@
       .floating-petals {
         opacity: 0.72;
       }
+
+      .intro-orb {
+        width: 150px;
+        height: 150px;
+        opacity: 0.58;
+      }
     }
 
     @media (max-width: 480px) and (orientation: portrait) {
@@ -925,6 +968,7 @@
       .section-transition-glow,
       .progress-dot,
       .petal,
+      .intro-orb,
       body::before,
       body::after {
         animation: none;
@@ -983,6 +1027,57 @@
         opacity: 0;
       }
     }
+
+    @keyframes heroGlow {
+      0%,
+      100% {
+        text-shadow: 0 8px 30px rgba(0, 0, 0, 0.34);
+      }
+      50% {
+        text-shadow: 0 10px 34px rgba(242, 214, 179, 0.22), 0 8px 30px rgba(0, 0, 0, 0.34);
+      }
+    }
+
+    @keyframes ampPulse {
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.92;
+      }
+      50% {
+        transform: scale(1.14);
+        opacity: 1;
+      }
+    }
+
+    @keyframes buttonBreathe {
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(242, 214, 179, 0);
+      }
+      50% {
+        box-shadow: 0 0 0 8px rgba(242, 214, 179, 0.08);
+      }
+    }
+
+    @keyframes orbDrift {
+      from {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      to {
+        transform: translate3d(18px, -20px, 0) scale(1.08);
+      }
+    }
+
+    @keyframes heroCardBreath {
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        transform: translateY(-6px) scale(1.012);
+      }
+    }
   </style>
 </head>
 <body>
@@ -1000,6 +1095,8 @@
 
   <main>
     <section class="section intro is-visible" id="home">
+      <span class="intro-orb left" aria-hidden="true"></span>
+      <span class="intro-orb right" aria-hidden="true"></span>
       <div class="card">
         <p class="eyebrow">Together With Their Families</p>
         <h1 class="script hero-names">
