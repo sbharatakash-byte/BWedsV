@@ -101,9 +101,9 @@
       filter: saturate(0.86) blur(1px);
       transform: scale(0.985);
       transition:
-        opacity 0.85s ease,
-        filter 0.85s ease,
-        transform 0.85s ease;
+        opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: transform, opacity, filter;
     }
 
@@ -154,9 +154,9 @@
       filter: blur(12px);
       overflow: hidden;
       transition:
-        opacity 0.9s ease,
-        transform 0.9s ease,
-        filter 0.9s ease,
+        opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.9s cubic-bezier(0.22, 1, 0.36, 1),
         border-color 0.7s ease,
         box-shadow 0.7s ease;
     }
@@ -445,6 +445,7 @@
         border-color 0.25s ease,
         box-shadow 0.25s ease;
       animation: buttonBreathe 3.4s ease-in-out infinite;
+      touch-action: manipulation;
     }
 
     .link-button:hover,
@@ -453,6 +454,56 @@
       border-color: rgba(242, 214, 179, 0.7);
       transform: translateY(-2px);
       box-shadow: 0 14px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .link-button:active,
+    .calendar-button:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .closing-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .calendar-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-width: 10rem;
+      padding: 0.82rem 1.15rem;
+      border: 1px solid rgba(242, 214, 179, 0.5);
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(242, 214, 179, 0.18), rgba(255, 255, 255, 0.06));
+      color: #fff8ef;
+      font-size: 0.76rem;
+      letter-spacing: 0.08rem;
+      text-transform: uppercase;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.18);
+      transition:
+        transform 0.28s ease,
+        box-shadow 0.28s ease,
+        border-color 0.28s ease,
+        background 0.28s ease;
+      animation: buttonBreathe 3.8s ease-in-out infinite;
+      touch-action: manipulation;
+      cursor: pointer;
+    }
+
+    .calendar-button:hover,
+    .calendar-button:focus-visible {
+      transform: translateY(-3px);
+      border-color: rgba(242, 214, 179, 0.78);
+      background: linear-gradient(135deg, rgba(242, 214, 179, 0.28), rgba(255, 255, 255, 0.1));
+      box-shadow: 0 18px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .calendar-button-label {
+      white-space: nowrap;
     }
 
     .scroll-hint {
@@ -928,6 +979,14 @@
           mobileButtonLift 4.6s ease-in-out infinite;
       }
 
+      .calendar-button {
+        width: 100%;
+        max-width: 16rem;
+        animation:
+          buttonBreathe 3.8s ease-in-out infinite,
+          mobileButtonLift 4.6s ease-in-out infinite;
+      }
+
       .section.is-active .event-card,
       .section.is-active .venue-item {
         transform: translateY(-2px);
@@ -1051,6 +1110,7 @@
       .progress-dot,
       .petal,
       .intro-orb,
+      .calendar-button,
       body::before,
       body::after {
         animation: none;
@@ -1251,6 +1311,11 @@
         <p class="eyebrow">With Love</p>
         <h2 class="script">Save the Date</h2>
         <p class="body">Your presence will make our celebration complete. We cannot wait to share this unforgettable day with you.</p>
+        <div class="closing-actions">
+          <button class="calendar-button" id="calendarButton" type="button">
+            <span class="calendar-button-label">Add To Calendar</span>
+          </button>
+        </div>
       </div>
     </section>
   </main>
@@ -1259,6 +1324,7 @@
     const sections = document.querySelectorAll('.section');
     const scrollHint = document.getElementById('scrollHint');
     const progressRail = document.getElementById('progressRail');
+    const calendarButton = document.getElementById('calendarButton');
     let activeSectionId = null;
     let transitionTimer;
     let ticking = false;
@@ -1358,6 +1424,39 @@
       updateScrollEffects();
     };
 
+    const downloadCalendarEvent = () => {
+      const eventLines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//BWedsV//Wedding Invitation//EN',
+        'CALSCALE:GREGORIAN',
+        'BEGIN:VEVENT',
+        'UID:bharath-vishnu-wedding-20260429@bwedsv',
+        'DTSTAMP:20260324T000000Z',
+        'DTSTART;TZID=Asia/Kolkata:20260429T180000',
+        'DTEND;TZID=Asia/Kolkata:20260430T120000',
+        'SUMMARY:Bharath Akash and Vishnu Priya Wedding Celebration',
+        'LOCATION:Taj Marriage Hall, Trichy and Vayalur Murugan Kovil, Trichy',
+        'DESCRIPTION:Engagement on 29 April at 6:00 PM, followed by Muhurtham on 30 April at 7:31 AM and Reception at 11:00 AM.',
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+
+      const eventBlob = new Blob([eventLines], { type: 'text/calendar;charset=utf-8' });
+      const downloadUrl = URL.createObjectURL(eventBlob);
+      const downloadLink = document.createElement('a');
+
+      downloadLink.href = downloadUrl;
+      downloadLink.download = 'bharath-vishnu-wedding.ics';
+      document.body.append(downloadLink);
+      downloadLink.click();
+      downloadLink.remove();
+
+      window.setTimeout(() => {
+        URL.revokeObjectURL(downloadUrl);
+      }, 1000);
+    };
+
     const hideHint = () => {
       if (window.scrollY > window.innerHeight * 0.35) {
         scrollHint.classList.add('is-hidden');
@@ -1368,6 +1467,7 @@
     window.addEventListener('scroll', hideHint, { passive: true });
     window.addEventListener('scroll', handleScrollEffects, { passive: true });
     window.addEventListener('resize', handleScrollEffects);
+    calendarButton?.addEventListener('click', downloadCalendarEvent);
 
     if (document.readyState === 'complete' || prefersReducedMotion) {
       bootAnimations();
