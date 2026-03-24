@@ -41,6 +41,35 @@
       color: var(--text);
       font-family: 'Cormorant Garamond', Georgia, serif;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 38vw;
+      height: 38vw;
+      border-radius: 999px;
+      pointer-events: none;
+      filter: blur(90px);
+      opacity: 0.24;
+      z-index: 0;
+      animation: ambientPulse 14s ease-in-out infinite alternate;
+    }
+
+    body::before {
+      top: -10vw;
+      left: -10vw;
+      background: radial-gradient(circle, rgba(247, 211, 165, 0.34), transparent 68%);
+    }
+
+    body::after {
+      right: -12vw;
+      bottom: -12vw;
+      background: radial-gradient(circle, rgba(168, 111, 64, 0.28), transparent 70%);
+      animation-delay: -5s;
     }
 
     a {
@@ -51,6 +80,7 @@
     main {
       position: relative;
       perspective: 1600px;
+      z-index: 1;
     }
 
     .section {
@@ -118,12 +148,35 @@
       opacity: 0;
       transform: translateY(40px) scale(0.965);
       filter: blur(12px);
+      overflow: hidden;
       transition:
         opacity 0.9s ease,
         transform 0.9s ease,
         filter 0.9s ease,
         border-color 0.7s ease,
         box-shadow 0.7s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 24%, transparent 78%, rgba(255, 230, 198, 0.12));
+      opacity: 0.72;
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: -35%;
+      background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.22) 50%, transparent 70%);
+      transform: translateX(-58%) rotate(8deg);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.9s ease, opacity 0.9s ease;
     }
 
     .section.is-visible .card {
@@ -159,6 +212,11 @@
 
     .section.is-active .card {
       transition-duration: 1.05s;
+    }
+
+    .section.is-active .card::after {
+      transform: translateX(58%) rotate(8deg);
+      opacity: 0.4;
     }
 
     .eyebrow {
@@ -222,6 +280,40 @@
       color: var(--muted);
     }
 
+    .eyebrow,
+    .title,
+    .script,
+    .subtitle,
+    .body,
+    .meta {
+      transform: translateY(14px);
+      opacity: 0;
+      transition:
+        transform 0.8s ease,
+        opacity 0.8s ease;
+    }
+
+    .section.is-visible .eyebrow,
+    .section.is-visible .title,
+    .section.is-visible .script,
+    .section.is-visible .subtitle,
+    .section.is-visible .body,
+    .section.is-visible .meta {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .section.is-visible .title,
+    .section.is-visible .script {
+      transition-delay: 0.08s;
+    }
+
+    .section.is-visible .subtitle,
+    .section.is-visible .body,
+    .section.is-visible .meta {
+      transition-delay: 0.16s;
+    }
+
     .meta {
       margin-top: 10px;
       font-size: clamp(0.94rem, 3vw, 1.14rem);
@@ -246,7 +338,8 @@
         opacity 0.7s ease,
         transform 0.7s ease,
         background-color 0.7s ease,
-        border-color 0.7s ease;
+        border-color 0.7s ease,
+        box-shadow 0.7s ease;
     }
 
     .event-title {
@@ -285,7 +378,8 @@
         opacity 0.7s ease,
         transform 0.7s ease,
         background-color 0.7s ease,
-        border-color 0.7s ease;
+        border-color 0.7s ease,
+        box-shadow 0.7s ease;
     }
 
     .section.is-visible .event-card,
@@ -300,6 +394,7 @@
     .section.is-active .venue-item {
       border-color: rgba(242, 214, 179, 0.26);
       background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.16);
     }
 
     .venue-title {
@@ -411,6 +506,35 @@
       opacity: 1;
     }
 
+    .floating-petals {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      top: 110%;
+      width: 14px;
+      height: 14px;
+      border-radius: 16px 2px 16px 2px;
+      background: linear-gradient(145deg, rgba(255, 237, 214, 0.82), rgba(227, 175, 137, 0.24));
+      box-shadow: 0 0 18px rgba(255, 221, 184, 0.16);
+      opacity: 0.34;
+      animation: petalRise var(--petal-duration, 18s) linear infinite;
+      animation-delay: var(--petal-delay, 0s);
+      left: var(--petal-left, 50%);
+      transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    .petal:nth-child(2n) {
+      width: 10px;
+      height: 10px;
+      opacity: 0.22;
+    }
+
     @media (min-width: 768px) {
       .card {
         width: min(100%, 31rem);
@@ -446,6 +570,14 @@
 
       .intro .script {
         font-size: clamp(1.9rem, 3.8vw, 3rem);
+      }
+
+      .event-card:hover,
+      .venue-item:hover {
+        transform: translateY(-6px);
+        border-color: rgba(242, 214, 179, 0.3);
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 24px 46px rgba(0, 0, 0, 0.2);
       }
     }
 
@@ -690,6 +822,10 @@
         right: 12px;
         gap: 10px;
       }
+
+      .floating-petals {
+        opacity: 0.72;
+      }
     }
 
     @media (max-width: 480px) and (orientation: portrait) {
@@ -787,7 +923,10 @@
       .event-card,
       .venue-item,
       .section-transition-glow,
-      .progress-dot {
+      .progress-dot,
+      .petal,
+      body::before,
+      body::after {
         animation: none;
         transition: none;
       }
@@ -806,6 +945,43 @@
       .section::before {
         transform: scale(1.08);
       }
+
+      .eyebrow,
+      .title,
+      .script,
+      .subtitle,
+      .body,
+      .meta {
+        transform: none;
+        opacity: 1;
+      }
+    }
+
+    @keyframes ambientPulse {
+      from {
+        transform: scale(1) translate3d(0, 0, 0);
+      }
+      to {
+        transform: scale(1.12) translate3d(1.5vw, -1.5vw, 0);
+      }
+    }
+
+    @keyframes petalRise {
+      0% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+        opacity: 0;
+      }
+      12% {
+        opacity: 0.3;
+      }
+      50% {
+        transform: translate3d(20px, -52vh, 0) rotate(120deg);
+        opacity: 0.28;
+      }
+      100% {
+        transform: translate3d(-18px, -118vh, 0) rotate(260deg);
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -813,6 +989,14 @@
   <div class="scroll-hint" id="scrollHint">Scroll</div>
   <div class="section-transition-glow" aria-hidden="true"></div>
   <div class="progress-rail" id="progressRail" aria-hidden="true"></div>
+  <div class="floating-petals" aria-hidden="true">
+    <span class="petal" style="--petal-left: 8%; --petal-duration: 17s; --petal-delay: -4s;"></span>
+    <span class="petal" style="--petal-left: 21%; --petal-duration: 14s; --petal-delay: -10s;"></span>
+    <span class="petal" style="--petal-left: 39%; --petal-duration: 19s; --petal-delay: -2s;"></span>
+    <span class="petal" style="--petal-left: 57%; --petal-duration: 16s; --petal-delay: -7s;"></span>
+    <span class="petal" style="--petal-left: 74%; --petal-duration: 20s; --petal-delay: -12s;"></span>
+    <span class="petal" style="--petal-left: 89%; --petal-duration: 15s; --petal-delay: -5s;"></span>
+  </div>
 
   <main>
     <section class="section intro is-visible" id="home">
