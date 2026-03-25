@@ -980,8 +980,10 @@
       }
 
       .calendar-button {
-        width: 100%;
-        max-width: 16rem;
+        flex: 1 1 0;
+        min-width: 0;
+        max-width: none;
+        padding-inline: 0.75rem;
         animation:
           buttonBreathe 3.8s ease-in-out infinite,
           mobileButtonLift 4.6s ease-in-out infinite;
@@ -1026,6 +1028,14 @@
         padding: 8px 12px;
         font-size: 0.68rem;
         letter-spacing: 0.07rem;
+      }
+
+      .closing-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: stretch;
+        width: 100%;
+        gap: 0.65rem;
       }
 
       .progress-rail {
